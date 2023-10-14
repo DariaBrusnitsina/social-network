@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './authorization.scss'
 import { useNavigate } from 'react-router-dom';
+import { RootState, useAppDispatch } from '../../store/store';
+import { login } from '../../store/authReducer';
+import { useSelector } from 'react-redux';
 
 type FormData = {
   username: string;
@@ -8,10 +11,20 @@ type FormData = {
 };
 
 export const Authorization: React.FC = () => {
+  const {isAuthenticated} = useSelector((state: RootState) => state.auth)
+
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/')
+    }
+  }, [])
+
   const [formData, setFormData] = useState<FormData>({
-    username: 'vniir',
-    password: '12345',
+    username: 'kminchelle',
+    password: '0lelplR',
   });
 
   const [errors, setErrors] = useState<Partial<FormData>>({});
@@ -37,13 +50,13 @@ export const Authorization: React.FC = () => {
       newErrors.password = 'Введите пароль';
     }
 
-    if (formData.password && formData.username && formData.username !== 'vniir') {
-      setAuthError('Пользователь не найден')
-    }
+    // if (formData.password && formData.username && formData.username !== 'vniir') {
+    //   setAuthError('Пользователь не найден')
+    // }
 
-    if (formData.password && formData.username && formData.username === 'vniir' && formData.password !== '12345') {
-      setAuthError('Неверный пароль')
-    }
+    // if (formData.password && formData.username && formData.username === 'vniir' && formData.password !== '12345') {
+    //   setAuthError('Неверный пароль')
+    // }
 
     setErrors(newErrors);
 
@@ -54,8 +67,10 @@ export const Authorization: React.FC = () => {
     e.preventDefault();
     if (validateForm() && !authError) {
       setAuthError(null)
-      navigate('/')
       console.log(formData);
+      dispatch(login(formData.username, formData.password))
+      navigate('/')
+
     }
   };
 

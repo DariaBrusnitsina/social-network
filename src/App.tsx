@@ -4,11 +4,13 @@ import { Authorization } from './pages/Authorization/Authorization'
 import { Posts } from './pages/Posts/Posts'
 import { Profile } from './pages/Profile/Profile'
 import { Post } from './pages/Post/Post'
-
-const isLoggedIn = true
+import { useSelector } from 'react-redux'
+import { RootState } from './store/store'
 
 function Home() {
-  if (isLoggedIn) {
+  const {isAuthenticated} = useSelector((state: RootState) => state.auth)
+
+  if (isAuthenticated) {
     return <Navigate to="/posts"/>
   } else {
     return <Navigate to="/auth"/>

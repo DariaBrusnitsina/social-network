@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './authorization.scss'
+import { useNavigate } from 'react-router-dom';
 
 type FormData = {
   username: string;
@@ -7,6 +8,7 @@ type FormData = {
 };
 
 export const Authorization: React.FC = () => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState<FormData>({
     username: 'vniir',
     password: '12345',
@@ -50,8 +52,9 @@ export const Authorization: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
+    if (validateForm() && !authError) {
       setAuthError(null)
+      navigate('/')
       console.log(formData);
     }
   };

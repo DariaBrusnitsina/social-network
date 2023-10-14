@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import { Navigation } from '../../components/Navigation/Navigation'
 import './styles.scss'
 import { PostsList } from '../../components/PostsList/PostsList';
-import { Post } from '../../types';
+import { IPost } from '../../types';
 
 const tags = ["#history", "#american", "#crime", "#french", "#fiction", "#english", "#mystery", "#love", "#magical"]
 
 
 export function Posts() {
-  const [posts, setPosts] = useState<undefined | Post[]>()
+  const [posts, setPosts] = useState<undefined | IPost[]>()
 
   async function getData (){
     fetch('https://dummyjson.com/posts')
@@ -31,7 +31,7 @@ export function Posts() {
   }, [])
 
   return (
-    <section className="posts_container">
+    <section className="container">
       <Navigation/>
 
       <div className="postslist-and-tags__wrapper">

@@ -1,6 +1,10 @@
 .authorization {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
   width: 40%;
-  margin: 0 auto;
   padding: 20px;
   display: flex;
   height: 400px;
@@ -68,12 +72,10 @@
   transition: all 0.25s;
   font-weight: 700;
 
-
   &:hover {
     border-color: #646cff;
     color: #646cff;
     transition: all 0.25s;
-
   }
 }
 

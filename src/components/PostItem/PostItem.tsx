@@ -1,18 +1,20 @@
-import { Post } from "../../types";
+import { useNavigate } from "react-router-dom";
+import { IPost } from "../../types";
 import './styles.scss'
 
 interface Props {
-  post: Post;
+  post: IPost;
 }
 
 export function PostItem({post}: Props) {
+  const navigate = useNavigate()
 
   return (
     <div className="post__container">
 
       <div className="row">
-        <button className="text-btn">{post.title}</button>
-        <p>Name N.</p>
+        <button className="text-btn" onClick={() => navigate(`/posts/${post.id}`, {replace: true})}>{post.title}</button>
+        <p>{`userID: ${post.userId}`}</p>
       </div>
 
       <p>{post.body}</p>

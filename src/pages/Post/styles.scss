@@ -1,0 +1,34 @@
+.post-and-comments__container {
+  margin: 0 60px;
+
+  h2 {
+    border-bottom: 2px solid #646cff;
+  }
+}
+
+.comment__container {
+  margin-bottom: 25px;
+
+  h5, p {
+    margin: 0;
+  }
+
+}
+
+.comment-btn {
+  color: gray;
+  border: 1px solid gray;
+  border-radius: 25px;
+  padding: 10px;
+  transition: all 0.25s;
+  font-weight: 700;
+
+
+  &:hover {
+    background-color: #646cff;
+    border-color: #646cff;
+    color: white;
+    transition: all 0.25s;
+
+  }
+}

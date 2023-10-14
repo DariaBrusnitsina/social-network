@@ -1,0 +1,39 @@
+.posts_container {
+  width: 70%;
+  margin: 0 auto;
+  height: 100%;
+  background-color: white;
+}
+
+.postslist-and-tags__wrapper {
+  margin: 0 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.posts_postslist-container {
+  width: 60%;
+}
+
+.posts_tags-container {
+  width: 20%;
+
+  .tags__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+
+    p {
+      margin: 5px;
+      padding: 5px;
+      background-color: rgb(181, 181, 181);
+      font-size: 14px;
+      transition: all 0.3s ease-out;
+
+      &:hover {
+        cursor: pointer;
+        background-color: rgb(201, 201, 201);
+        transition: all 0.3s ease-out;
+      }
+    }
+  }
+}

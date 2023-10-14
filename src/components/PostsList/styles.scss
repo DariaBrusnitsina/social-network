@@ -1,0 +1,25 @@
+.postlist {
+  margin-bottom: 60px;
+}
+
+.postlist-btns {
+  display: flex;
+  margin: 20px;
+
+  .text-btn {
+    font-size: 20px;
+  }
+
+  p {
+    color: #646cff;
+    font-weight: 700;
+    margin: 0 20px;
+  }
+}
+
+.disabled {
+  &:hover {
+    color: gray;
+    cursor:default;
+  }
+}

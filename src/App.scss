@@ -1,0 +1,22 @@
+#root {
+  width: 100vw;
+}
+
+.text-btn {
+  color: gray;
+  transition: all 0.3s ease-out;
+
+  &:hover {
+    color: #3f5efb;
+    transition: all 0.3s ease-out;
+  }
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.textCenter {
+  text-align: center;
+}

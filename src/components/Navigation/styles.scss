@@ -1,0 +1,23 @@
+.navigation {
+  border-bottom: 2px solid rgb(182, 181, 181);
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .text-btn {
+    font-weight: 700;
+    margin: 0 30px;
+  }
+}
+
+.profile-pic {
+  width: 50px;
+  border: 1px solid black;
+  border-radius: 25px;
+}
+
+.profile-nav-section {
+  display: flex;
+  align-items: center;
+}

@@ -1,0 +1,82 @@
+.authorization {
+  width: 40%;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  height: 400px;
+  align-items: center;
+}
+
+.left {
+  padding: 10px;
+  background-color: white;
+  width: 40%;
+  height: 90%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  .text-btn {
+    margin: 10px 0;
+
+  }
+}
+
+.rigth {
+  padding: 20px;
+  background-color: #2D2F36;
+  width: 60%;
+  height: 100%;
+  box-shadow: -5px 5px 15px #59595a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+
+  .authorization-label {
+    color:  #c2c2c5;
+    display: block;
+    font-size: 14px;
+    height: 16px;
+    margin-bottom: 10px;
+  }
+
+  .authorization-input {
+    border-bottom: 2px solid white;
+    color: white;
+    font-size: 20px;
+  }
+}
+
+.authorization-error {
+  color:  #fc466b;
+  font-size: 14px;
+  height: 16px;
+  margin: 5px 0 30px 0;
+
+  p {
+    margin: 0;
+  }
+}
+
+.authorization-btn {
+  color: white;
+  border: 1px solid white;
+  border-radius: 25px;
+  padding: 10px;
+  transition: all 0.25s;
+  font-weight: 700;
+
+
+  &:hover {
+    border-color: #646cff;
+    color: #646cff;
+    transition: all 0.25s;
+
+  }
+}
+
+.authorization-btn-container {
+  text-align: center;
+}

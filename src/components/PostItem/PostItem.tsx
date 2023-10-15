@@ -12,7 +12,7 @@ export function PostItem({post}: Props) {
   return (
     <div className="post__container">
 
-      <div className="row">
+      <div className="row post_title">
         <button className="text-btn" onClick={() => navigate(`/posts/${post.id}`, {replace: true})}>{post.title}</button>
         <p>{`userID: ${post.userId}`}</p>
       </div>
@@ -21,13 +21,13 @@ export function PostItem({post}: Props) {
 
       <div className="row">
       <div className="tags">
-        {post.tags.map(t => <p>#{t}</p>)}
+        {post.tags.map(t => <p key={t}>#{t}</p>)}
       </div>
           <button className="reaction-btn">
           <p>{post.reactions}</p>
 
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" className="bi bi-heart-fill" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+              <path fillRule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
             </svg>
           </button>
       </div>

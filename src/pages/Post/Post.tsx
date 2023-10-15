@@ -1,101 +1,59 @@
-import { useLocation } from "react-router-dom";
-import { Navigation } from "../../components/Navigation/Navigation";
-import { IComment, IPost, IUser } from "../../types";
-import { useEffect, useState } from "react";
-import { PostItem } from "../../components/PostItem/PostItem";
 import './styles.scss'
+import { Navigate, useLocation } from "react-router-dom";
+import { Navigation } from "../../components/Navigation/Navigation";
+import { useEffect } from "react";
+import { PostItem } from "../../components/PostItem/PostItem";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../store/store";
+import { getPostById } from "../../store/postsReducer";
+import { getComments, getCommentsById, getCommentsLoadingStatus } from "../../store/commentsReducer";
+import { getUser, getUserById, getUserLoadingStatus } from "../../store/userReducer";
 
 export function Post() {
   const location = useLocation()
-  const postId = location.pathname.split("/")[2]
-  const [post, setPost] = useState<undefined | IPost>()
-  const [comments, setComments] = useState<undefined | IComment[]>()
-  const [user, setUser] = useState<undefined | IUser>()
+  const postId = Number(location.pathname.split("/")[2])
 
+  const dispatch = useAppDispatch()
 
-  async function getData (){
-    fetch(`https://dummyjson.com/posts/${postId}`)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })
-  .then(data => {
-    setPost(data)
-  })
-  .catch(error => {
-    console.error('There was a problem with the fetch operation:', error);
-  });
-  }
-
-  async function getUser (){
-    fetch(`https://dummyjson.com/users/${post?.userId}`)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })
-  .then(data => {
-    setUser(data)
-  })
-  .catch(error => {
-    console.error('There was a problem with the fetch operation:', error);
-  });
-  }
-
-  async function getComments (){
-    fetch(`https://dummyjson.com/posts/${postId}/comments`)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })
-  .then(data => {
-    setComments(data.comments)
-  })
-  .catch(error => {
-    console.error('There was a problem with the fetch operation:', error);
-  });
-  }
+  const {isAuthenticated} = useSelector((state: RootState) => state.auth)
+  const post = useSelector(getPostById(postId))
+  const comments = useSelector(getComments());
+  const isLoadingComments = useSelector(getCommentsLoadingStatus())
+  const user = useSelector(getUser());
+  const isLoadingUser = useSelector(getUserLoadingStatus())
 
   useEffect(() => {
-    getData()
-    getComments()
-
-    if (post !== undefined) {
-      getUser()
+    dispatch(getCommentsById(postId))
+    if (post?.userId != undefined) {
+      dispatch(getUserById(post.userId))
     }
+  }, [postId]);
 
-  }, [])
-
-
-  console.log(user)
-
+  if (!isAuthenticated) {
+    return <Navigate to="/auth"/>
+  }
 
   return (
     <section className="container">
       <Navigation/>
 
-      <div className="post-and-comments__container">
-        {user !== undefined && <h2>Post by {user.firstName} {user.lastName}</h2>}
+       <div className="post-and-comments__container">
+        {!isLoadingUser ? user && <h2>Post by {user.firstName} {user.lastName}</h2> : <p>Loading...</p>}
         {post !== undefined && <PostItem post={post} />}
-        <div>
+        {!isLoadingComments ? <div>
           <h3>Комментарии</h3>
-          {comments !== undefined && comments.map(m =>
-          <div className="comment__container">
+          {comments && comments.map(m =>
+          <div className="comment__container" key={m.id}>
             <h5>{m.user.username}</h5>
 
             <p>{m.body}</p>
           </div>)}
           <h4>Оставить комментарий</h4>
           <div>
-          <textarea name="text" id="" cols={50} rows={5}></textarea>
+          <textarea name="text" id=""  rows={5}></textarea>
           </div>
           <button className="comment-btn">Отправить</button>
-        </div>
+        </div> : <p>Loading...</p>}
       </div>
 
     </section>

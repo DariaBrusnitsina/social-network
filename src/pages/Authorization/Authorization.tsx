@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
 import './authorization.scss'
-import { useNavigate } from 'react-router-dom';
+
+import { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { RootState, useAppDispatch } from '../../store/store';
-import { login } from '../../store/authReducer';
+import { getAuthErrors, login } from '../../store/authReducer';
 import { useSelector } from 'react-redux';
 
 type FormData = {
@@ -12,24 +13,15 @@ type FormData = {
 
 export const Authorization: React.FC = () => {
   const {isAuthenticated} = useSelector((state: RootState) => state.auth)
+  const loginError = useSelector(getAuthErrors());
 
-  const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/')
-    }
-  }, [])
-
+  const [errors, setErrors] = useState<Partial<FormData>>({});
   const [formData, setFormData] = useState<FormData>({
     username: 'kminchelle',
     password: '0lelplR',
   });
-
-  const [errors, setErrors] = useState<Partial<FormData>>({});
-  const [authError, setAuthError] = useState<string | null>();
-
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -41,45 +33,35 @@ export const Authorization: React.FC = () => {
 
   const validateForm = () => {
     const newErrors: Partial<FormData> = {};
-
     if (!formData.username) {
       newErrors.username = 'Введите логин';
     }
-
     if (!formData.password) {
       newErrors.password = 'Введите пароль';
     }
 
-    // if (formData.password && formData.username && formData.username !== 'vniir') {
-    //   setAuthError('Пользователь не найден')
-    // }
-
-    // if (formData.password && formData.username && formData.username === 'vniir' && formData.password !== '12345') {
-    //   setAuthError('Неверный пароль')
-    // }
-
     setErrors(newErrors);
 
-    return Object.keys(newErrors).length === 0;
+    return Object.keys(newErrors).length === 0
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm() && !authError) {
-      setAuthError(null)
-      console.log(formData);
+    if (validateForm()) {
       dispatch(login(formData.username, formData.password))
-      navigate('/')
-
     }
   };
+
+  if (isAuthenticated) {
+    return <Navigate to="/posts"/>
+  }
 
   return (
     <section className='authorization'>
 
       <div className='left'>
         <h2>Авторизация</h2>
-        <p>Добро пожаловать! Введите свои данные для входа в систему</p>
+        <p className='welcome-text'>Добро пожаловать! Введите свои данные для входа в систему</p>
       <div className='column'>
         <button className='text-btn'>Регистрация</button>
         <button className='text-btn'>Забыли пароль?</button>
@@ -119,7 +101,7 @@ export const Authorization: React.FC = () => {
         <div className='authorization-btn-container'>
           <button className="authorization-btn" type="submit">Войти</button>
           <div className='authorization-error'>
-              {authError && <p >{authError}</p>}
+            {loginError && <p>{loginError}</p> }
           </div>
         </div>
 

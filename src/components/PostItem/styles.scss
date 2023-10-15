@@ -48,3 +48,11 @@
     margin: 0;
   }
 }
+
+.post_title {
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
+
+}

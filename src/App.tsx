@@ -4,24 +4,23 @@ import { Authorization } from './pages/Authorization/Authorization'
 import { Posts } from './pages/Posts/Posts'
 import { Profile } from './pages/Profile/Profile'
 import { Post } from './pages/Post/Post'
-import { useSelector } from 'react-redux'
-import { RootState } from './store/store'
+import { useAppDispatch } from './store/store'
+import { useEffect } from 'react'
+import { getPosts } from './store/postsReducer'
 
 function Home() {
-  const {isAuthenticated} = useSelector((state: RootState) => state.auth)
-
-  if (isAuthenticated) {
     return <Navigate to="/posts"/>
-  } else {
-    return <Navigate to="/auth"/>
-  }
-
   return (
     <></>
   )
 }
 
 function App() {
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(getPosts())
+  }, []);
 
   return (
       <Routes>

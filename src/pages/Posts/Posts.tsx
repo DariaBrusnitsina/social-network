@@ -1,34 +1,20 @@
-import { useEffect, useState } from 'react';
 import { Navigation } from '../../components/Navigation/Navigation'
 import './styles.scss'
 import { PostsList } from '../../components/PostsList/PostsList';
-import { IPost } from '../../types';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+import { Navigate } from 'react-router-dom';
 
 const tags = ["#history", "#american", "#crime", "#french", "#fiction", "#english", "#mystery", "#love", "#magical"]
 
-
 export function Posts() {
-  const [posts, setPosts] = useState<undefined | IPost[]>()
+  const {isAuthenticated} = useSelector((state: RootState) => state.auth)
+  const posts = useSelector((state: RootState) => state.posts.entities)
 
-  async function getData (){
-    fetch('https://dummyjson.com/posts')
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })
-  .then(data => {
-    setPosts(data.posts)
-  })
-  .catch(error => {
-    console.error('There was a problem with the fetch operation:', error);
-  });
+  if (!isAuthenticated) {
+    return <Navigate to="/auth"/>
   }
 
-  useEffect(() => {
-    getData()
-  }, [])
 
   return (
     <section className="container">
@@ -36,13 +22,13 @@ export function Posts() {
 
       <div className="postslist-and-tags__wrapper">
           <div className='posts_postslist-container'>
-            {posts !== undefined && <PostsList posts={posts} />}
+            {posts !== null && <PostsList posts={posts} />}
           </div>
 
           <div className='posts_tags-container'>
             <h2>Tags</h2>
             <div className='tags__wrapper'>
-              {tags.map(tag => <p>{tag}</p>)}
+              {tags.map(tag => <p key={tag}>{tag}</p>)}
               </div>
           </div>
       </div>

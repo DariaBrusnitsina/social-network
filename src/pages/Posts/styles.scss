@@ -1,17 +1,28 @@
-
-
 .postslist-and-tags__wrapper {
   margin: 0 20px;
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: 800px) {
+    flex-direction: column-reverse;
+  }
 }
 
 .posts_postslist-container {
   width: 60%;
+
+  @media (max-width: 800px) {
+    width: 100%;
+  }
 }
 
 .posts_tags-container {
   width: 20%;
+
+  @media (max-width: 800px) {
+    width: 100%;
+  }
+
 
   .tags__wrapper {
     display: flex;

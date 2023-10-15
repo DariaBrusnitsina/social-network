@@ -5,10 +5,25 @@
   margin-right: -50%;
   transform: translate(-50%, -50%);
   width: 40%;
-  padding: 20px;
   display: flex;
   height: 400px;
   align-items: center;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+    width: 90%;
+    top: 40%;
+
+    .welcome-text {
+      display: none;
+    }
+  }
+
+  @media (max-width: 400px) {
+    h2 {
+      font-size: 16px;
+    }
+  }
 }
 
 .left {
@@ -50,6 +65,10 @@
     border-bottom: 2px solid white;
     color: white;
     font-size: 20px;
+
+    @media (max-width: 400px) {
+      font-size: 16px;
+    }
   }
 }
 

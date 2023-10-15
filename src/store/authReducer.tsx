@@ -1,14 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Dispatch } from "redux";
-
-
-interface User {
-
-}
+import { IAuth } from "../types";
+import { RootState } from "./store";
 
 interface authState {
-  user: User | null;
+  user: IAuth | null;
   isAuthenticated: boolean;
   error: string | null;
 }
@@ -23,7 +20,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    fetchDataSuccess: (state, action: PayloadAction<User>) => {
+    fetchDataSuccess: (state, action: PayloadAction<IAuth>) => {
       state.isAuthenticated = true;
       state.user = action.payload;
       state.error = null;
@@ -62,8 +59,13 @@ export const login = (
       })
 
       dispatch(fetchDataSuccess(response.data));
+
     } catch (error) {
-      dispatch(fetchDataFailure("Что-то пошло не так"));
+      dispatch(fetchDataFailure("Неверный логин или пароль"));
     }
   };
 };
+
+export const getAuthErrors = () => (state: RootState) => state.auth.error;
+export const getCurrentUserId = () => (state: RootState) => state.auth.user?.id;
+

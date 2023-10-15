@@ -18,3 +18,26 @@ export interface IUser {
   firstName: string;
   lastName: string;
 }
+
+export interface IAuth {
+  id: number;
+  email: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  image: string;
+  token: string;
+}
+
+export interface IUsers {
+  id: number;
+  email: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  image: string;
+  token: string;
+  birthDate: string;
+}

@@ -1,0 +1,13 @@
+.profile_container {
+  margin: 0 20px;
+
+  display: flex;
+
+  @media (max-width: 800px) {
+    flex-direction: column-reverse;
+  }
+}
+
+.profile-page_image {
+  width: 40%;
+}

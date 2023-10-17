@@ -1,33 +1,37 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Dispatch } from "redux";
-import { IAuth } from "../types";
 import { RootState } from "./store";
+import localStorageService from "../services/localStorage.service";
 
 interface authState {
-  user: IAuth | null;
+  authId: null | {userId: string | null};
   isAuthenticated: boolean;
   error: string | null;
 }
 
-const initialState: authState = {
-  isAuthenticated: false,
-  user: null,
-  error: null,
-};
+const initialState: authState = localStorageService.getAccessToken()
+    ? {
+        error: null,
+        authId: { userId: localStorageService.getUserId() },
+        isAuthenticated: true,
+      }
+    : {
+        error: null,
+        authId: null,
+        isAuthenticated: false,
+      };
+
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    fetchDataSuccess: (state, action: PayloadAction<IAuth>) => {
+    fetchDataSuccess: (state, action: PayloadAction< {userId: string | null}>) => {
+      state.authId = action.payload;
       state.isAuthenticated = true;
-      state.user = action.payload;
-      state.error = null;
     },
     fetchDataFailure: (state, action: PayloadAction<string>) => {
-      state.isAuthenticated = false;
-      state.user = null;
       state.error = action.payload;
     },
     logout: () => {
@@ -59,6 +63,7 @@ export const login = (
       })
 
       dispatch(fetchDataSuccess(response.data));
+      localStorageService.setTokens(response.data);
 
     } catch (error) {
       dispatch(fetchDataFailure("Неверный логин или пароль"));
@@ -66,6 +71,6 @@ export const login = (
   };
 };
 
+
 export const getAuthErrors = () => (state: RootState) => state.auth.error;
-export const getCurrentUserId = () => (state: RootState) => state.auth.user?.id;
 

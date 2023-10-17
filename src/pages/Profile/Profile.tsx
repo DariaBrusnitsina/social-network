@@ -2,11 +2,9 @@ import './styles.scss'
 
 import { useSelector } from "react-redux";
 import { Navigation } from "../../components/Navigation/Navigation";
-import { RootState, useAppDispatch } from "../../store/store";
+import { RootState } from "../../store/store";
 import { Navigate } from "react-router-dom";
-import { getCurrentUserId } from "../../store/authReducer";
-import { getUser, getUserById } from "../../store/userReducer";
-import { useEffect } from "react";
+import { getUser } from "../../store/userReducer";
 
 function formatDate(inputDate: string) {
   const months = [
@@ -25,17 +23,8 @@ function formatDate(inputDate: string) {
 
 
 export function Profile() {
-  const dispatch = useAppDispatch()
-
   const {isAuthenticated} = useSelector((state: RootState) => state.auth)
-  const userId = Number(useSelector(getCurrentUserId()))
   const user = useSelector(getUser());
-
-  useEffect(() => {
-
-      dispatch(getUserById(userId))
-
-  }, [userId]);
 
   if (!isAuthenticated) {
     return <Navigate to="/auth"/>

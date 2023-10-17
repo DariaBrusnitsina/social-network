@@ -1,33 +1,46 @@
 import './styles.scss'
 import { Navigate, useLocation } from "react-router-dom";
 import { Navigation } from "../../components/Navigation/Navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { PostItem } from "../../components/PostItem/PostItem";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/store";
 import { getPostById } from "../../store/postsReducer";
 import { getComments, getCommentsById, getCommentsLoadingStatus } from "../../store/commentsReducer";
-import { getUser, getUserById, getUserLoadingStatus } from "../../store/userReducer";
+import axios from 'axios';
+import { IUser } from '../../types';
 
 export function Post() {
   const location = useLocation()
   const postId = Number(location.pathname.split("/")[2])
-
   const dispatch = useAppDispatch()
-
   const {isAuthenticated} = useSelector((state: RootState) => state.auth)
   const post = useSelector(getPostById(postId))
   const comments = useSelector(getComments());
   const isLoadingComments = useSelector(getCommentsLoadingStatus())
-  const user = useSelector(getUser());
-  const isLoadingUser = useSelector(getUserLoadingStatus())
+  const [userData, setUserData] = useState<IUser | null>(null);
+
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`https://dummyjson.com/users/${post?.userId}`);
+        setUserData(response.data);
+      } catch (error) {
+        console.error('Произошла ошибка при выполнении запроса:', error);
+      }
+    }
+
+    if (post?.userId !== undefined) {
+      fetchUserData()
+    }
+
+  }, [post?.userId]);
 
   useEffect(() => {
     dispatch(getCommentsById(postId))
-    if (post?.userId != undefined) {
-      dispatch(getUserById(post.userId))
-    }
-  }, [postId]);
+  }, [dispatch, postId]);
+
 
   if (!isAuthenticated) {
     return <Navigate to="/auth"/>
@@ -38,7 +51,7 @@ export function Post() {
       <Navigation/>
 
        <div className="post-and-comments__container">
-        {!isLoadingUser ? user && <h2>Post by {user.firstName} {user.lastName}</h2> : <p>Loading...</p>}
+        {userData !== null ? <h2>Post by {userData.firstName} {userData.lastName}</h2> : <p>Loading...</p>}
         {post !== undefined && <PostItem post={post} />}
         {!isLoadingComments ? <div>
           <h3>Комментарии</h3>

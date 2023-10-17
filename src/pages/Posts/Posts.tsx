@@ -15,7 +15,6 @@ export function Posts() {
     return <Navigate to="/auth"/>
   }
 
-
   return (
     <section className="container">
       <Navigation/>

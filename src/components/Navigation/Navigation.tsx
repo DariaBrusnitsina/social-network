@@ -1,15 +1,26 @@
 import { useNavigate } from 'react-router-dom';
 import './styles.scss'
-import { RootState, useAppDispatch } from '../../store/store';
+import { useAppDispatch } from '../../store/store';
 import { logout } from '../../store/authReducer';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import localStorageService from '../../services/localStorage.service';
+import { getUser, getUserById } from '../../store/userReducer';
 
 export function Navigation() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch()
-  const {user} = useSelector((state: RootState) => state.auth)
-	const [open, setOpen] = useState(false);
+  const userId =localStorageService.getUserId()
+  const [isLogout, setIsLogout] = useState(false)
+
+  useEffect(() => {
+    if (userId) {
+      dispatch(getUserById(Number(userId)))
+    }
+  }, [dispatch, userId, isLogout]);
+
+  const user = useSelector(getUser());
+  const [open, setOpen] = useState(false);
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -20,6 +31,8 @@ export function Navigation() {
 	};
 
   function handleLogout( ) {
+    setIsLogout(true)
+    localStorageService.removeAuthData()
     dispatch(logout());
     navigate('/auth')
     setOpen(false);

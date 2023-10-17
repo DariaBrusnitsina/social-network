@@ -11,7 +11,7 @@ import { getUserById } from './store/userReducer'
 import localStorageService from './services/localStorage.service'
 
 function Home() {
-    return <Navigate to="posts"/>
+  return <Navigate to="posts"/>
   return (
     <></>
   )

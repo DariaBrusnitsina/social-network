@@ -1,0 +1,27 @@
+.add-post-container {
+  margin-top: 10px;
+  border: 2px solid rgb(196, 196, 196);
+  padding: 10px;
+
+  h4 {
+    margin: 0;
+  }
+}
+
+.add-post-form {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.add-post-input {
+  border-bottom: 1px solid rgb(196, 196, 196);
+  padding: 5px;
+}
+
+.add-post-btn {
+  margin: 15px;
+  border: 1px solid black;
+  border-radius: 15px;
+  padding: 5px;
+}

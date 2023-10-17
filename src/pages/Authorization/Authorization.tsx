@@ -1,4 +1,4 @@
-import './authorization.scss'
+import './styles.scss'
 
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
@@ -11,7 +11,7 @@ type FormData = {
   password: string;
 };
 
-export const Authorization: React.FC = () => {
+export function Authorization() {
   const {isAuthenticated} = useSelector((state: RootState) => state.auth)
   const loginError = useSelector(getAuthErrors());
 
@@ -109,4 +109,4 @@ export const Authorization: React.FC = () => {
       </div>
     </section>
   );
-};
+}

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { PostItem } from "../PostItem/PostItem";
 import './styles.scss'
 import { IPost } from "../../types";
+import { AddPostForm } from "../AddPostForm/AddPostForm";
 
 interface Props {
   posts: IPost[]
@@ -42,6 +43,7 @@ export function PostsList({posts}: Props) {
 
   return (
     <div className="postlist">
+      {currentPage === 1 && <AddPostForm />}
       {currentPosts && currentPosts?.map((p) => <PostItem key={p.title} post={p}/>)}
       <div className="postlist-btns">
         <button className={currentPage === 1 ? "text-btn disabled" : "text-btn"} onClick={handlePreviousPage}>← prev</button>

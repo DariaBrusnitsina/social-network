@@ -1,27 +1,26 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+# Простая Социальная Сеть
+Это веб-приложение представляет собой простую социальную сеть, разработанную в рамках задания. В приложении реализованы следующие страницы:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Главная (доступна по корневой ссылке ```'/'```). Если пользователь не авторизован, отображается форма авторизации. В противном случае пользователь автоматически перенаправляется на ленту постов.
 
-## Expanding the ESLint configuration
+- Посты (доступна по ссылке ```'/posts'```). На странице отображается список постов и форма для создания нового поста. Карточка поста содержит текст, количество лайков, теги и ID автора.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Пост (доступна по ссылке ```'/posts/{post_id}'```). На странице поста отображается информация из карточки поста, а также имя и фамилия автора и комментарии.
 
-- Configure the top-level `parserOptions` property like this:
+- Профиль (доступна по ссылке ```'/profile'```). На странице отображается информация о пользователе, включая ФИО, электронную почту, дату рождения и аватар.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+- Страница авторизации (доступна по ссылке ```'/auth'```). На странице отображается форма для входа в аккаунт. Если пользователь не авторизован, он будет перенаправлен на эту страницу. Вход осуществляется с использованием фейковых данных. В случае неверных данных, отображается сообщение об ошибке. Для авторизации используются данные ```{ username: 'kminchelle', password: '0lelplR'}```, которые могут быть заменены данными [других пользователей](https://dummyjson.com/users).
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Приложение будет доступно по адресу https://dariabrusnitsina.github.io/social-network/
+
+## Используемые технологии
+- React
+- Redux
+- Axios
+- SCSS/SASS для стилизации
+- JWT для авторизации
+
+## API
+В проекте используются фейковые данные и API ([https://dummyjson.com/](https://dummyjson.com/)).
